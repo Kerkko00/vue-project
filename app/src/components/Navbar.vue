@@ -4,7 +4,7 @@
       <li class="navbtn"><a href="#">Home</a></li>
       <li class="navbtn" id="search">
         <form>
-          <input type="text"/>
+          <input type="text" />
           <button>Search</button>
         </form>
       </li>
@@ -59,12 +59,23 @@ a {
   background-color: lightcoral;
 }
 
-#search button {
-  font-size: x-large;
+#search {
+  padding: 0;
+  margin: auto 0;
+}
+
+#search input {
+  padding: 0.5em;
+  margin-right: 0.25em;
+  outline: none;
   border: none;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
+  border-radius: 1em;
+}
+
+#search button {
+  padding: 0.5em;
+  border: none;
+  border-radius: 1em;
 }
 
 #search:hover {
