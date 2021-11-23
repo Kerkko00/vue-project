@@ -4,7 +4,7 @@
       <li class="navbtn"><a href="#">Home</a></li>
       <li class="navbtn" id="search">
         <form>
-          <input type="text" />
+          <input type="text"/>
           <button>Search</button>
         </form>
       </li>
