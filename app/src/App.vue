@@ -1,26 +1,48 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <Navbar/>
+    <template v-for="idea in ideas" :key="idea">
+      <Content :ideas="idea"/>
+    </template>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Navbar from "./components/Navbar.vue"
+import Content from "./components/Content.vue"
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    Navbar,
+    Content,
+  },
+  data() {
+    return {
+      ideas: [
+        {title: "Something", desc: "This is something cool", user: "bob", upvotes: 12},
+        {title: "Something else", desc: "This is something super cool ", user: "sam", upvotes: 15},
+        {title: "Something sick", desc: "This is something amazingly cool", user: "joe", upvotes: 23},
+        {title: "Something crazy", desc: "This is something amazingly crazy", user: "kek", upvotes: 33},
+      ]
+    }
+  },
+
+
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+html {
+  font-family: Arial, sans-serif;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style-type: none;
 }
 </style>
