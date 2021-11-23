@@ -1,13 +1,13 @@
 <template>
   <div>
     <ul>
-      <li id="title">{{ ideas.title }}</li>
-      <li id="desc">{{ ideas.desc }}</li>
+      <li id="title">{{ idea.title }}</li>
+      <li id="desc">{{ idea.desc }}</li>
       <li id="upvotes">
-        <button>&uArr;</button>
-        {{ ideas.upvotes }}
+        <button v-on:click="vote">&uArr;</button>
+        {{ idea.upvotes }}
       </li>
-      <li id="user">By {{ ideas.user }}</li>
+      <li id="user">By {{ idea.user }}</li>
     </ul>
   </div>
 </template>
@@ -18,9 +18,14 @@ export default {
   data() {
     return {}
   },
-  methods: {},
+  methods: {
+    vote() {
+
+      return this.$emit("vote", this.idea.id)
+    }
+  },
   props: {
-    ideas: Object,
+    idea: Object,
   },
 }
 </script>
