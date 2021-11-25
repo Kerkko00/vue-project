@@ -28,6 +28,12 @@ export default {
       searchParams: "",
     }
   },
+  methods: {
+    submitSearch() {
+      return this.$emit("search", this.searchParams)
+    }
+  },
+  emits: ["search"]
 }
 </script>
 
@@ -49,7 +55,7 @@ a {
 
 .navbtn {
   padding: 1em;
-  background-color: lightseagreen;
+  border: 1px solid black;
 }
 
 .navbtn a {
@@ -60,9 +66,14 @@ a {
   background-color: lightcoral;
 }
 
+.navbtn:last-child {
+  border-left: none;
+}
+
 #search {
   padding: 0;
   margin: auto 0;
+  border: none;
 }
 
 #search input {
@@ -80,6 +91,6 @@ a {
 }
 
 #search:hover {
-  background-color: lightseagreen;
+  background: none;
 }
 </style>
