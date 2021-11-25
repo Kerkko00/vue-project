@@ -55,7 +55,16 @@ export default {
         if (idea.id === id) {
           idea.upvotes++;
         }
-      })
+      });
+      let requestOptions = {
+        method: 'POST',
+        redirect: 'follow'
+      };
+
+      fetch(`http://127.0.0.1:3000/api/votes?post=${id}`, requestOptions)
+          .then(response => response.text())
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
     },
     async fetchData(){
       let requestOptions = {
