@@ -61,7 +61,7 @@ div {
   outline: inherit;
 }
 
-#user {
+#author {
   font-style: oblique;
 }
 </style>
