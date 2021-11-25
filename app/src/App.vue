@@ -8,6 +8,7 @@
     <template v-for="idea in orderByVotes" :key="idea.id">
       <Content :idea="idea" @vote="upvote"/>
     </template>
+    <div id="noresults" v-show="!orderByVotes.length">No results</div>
   </div>
 </template>
 
@@ -27,11 +28,12 @@ export default {
   data() {
     return {
       ideas: [],
-      sortOrder: "lowest",
+      sortOrder: "highest",
       searchParams: "",
     }
   },
   computed: {
+    //Shows results in order chosen by the user
     orderByVotes() {
       let votes = this.ideas;
       if (this.sortOrder === "highest") {
@@ -46,6 +48,7 @@ export default {
     },
   },
   methods: {
+
     sort(sortOrder) {
       switch (sortOrder) {
         case "highest":
@@ -54,6 +57,7 @@ export default {
           return this.sortOrder = "lowest";
       }
     },
+    //Saves upvotes to database with REST api
     upvote(id) {
       this.ideas.forEach(idea => {
         if (idea.id === id) {
@@ -70,6 +74,7 @@ export default {
           .then(result => console.log(result))
           .catch(error => console.log('error', error));
     },
+    //Fetches idea data from REST api
     async fetchData(){
       let requestOptions = {
         method: 'GET',
@@ -88,6 +93,7 @@ export default {
       console.log(searchParams)
       this.sortOrder = "search"
       this.searchParams = searchParams.toLowerCase()
+      if(searchParams == "") this.sortOrder = "highest";
     }
   }
 }
@@ -135,5 +141,7 @@ li {
   margin: 0em 1em;
   margin-top: 1em;
 }
-
+#noresults {
+  text-align: center;
+}
 </style>

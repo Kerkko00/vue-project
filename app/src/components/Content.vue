@@ -35,6 +35,7 @@ div {
   border: 1px solid black;
   padding: 1.5em;
   margin: 1em;
+  border-radius: 3px;
 }
 
 #title {

@@ -4,8 +4,8 @@
       <li class="navbtn"><a href="#">Home</a></li>
       <li class="navbtn" id="search">
         <form>
-          <input type="text" v-model="searchParams"/>
-          <button v-on:click.prevent="submitSearch">Search</button>
+          <input type="text" placeholder="Search" v-model="searchParams" @input="submitSearch"/>
+<!--          <button v-on:click.prevent="submitSearch">Search</button>-->
         </form>
       </li>
       <ul v-if="!loggedin">
@@ -14,7 +14,7 @@
       </ul>
       <ul v-else>
         <li class="navbtn"><a href="#">My ideas</a></li>
-        <li class="navbtn"><a href="#">Profile</a></li>
+        <li class="navbtn"><a href="#">Log out</a></li>
       </ul>
     </ul>
   </nav>
