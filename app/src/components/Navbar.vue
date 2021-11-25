@@ -4,8 +4,8 @@
       <li class="navbtn"><a href="#">Home</a></li>
       <li class="navbtn" id="search">
         <form>
-          <input type="text"/>
-          <button>Search</button>
+          <input type="text" v-model="searchParams"/>
+          <button v-on:click.prevent="submitSearch">Search</button>
         </form>
       </li>
       <ul v-if="!loggedin">
@@ -25,6 +25,7 @@ export default {
   data() {
     return {
       loggedin: false,
+      searchParams: "",
     }
   },
 }

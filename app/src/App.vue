@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar/>
+    <Navbar @search="search"/>
     <div class="buttons">
       <button class="orderbutton" @click.prevent="sort('highest')">Sort by highest</button>
       <button class="orderbutton" @click.prevent="sort('lowest')">Sort by lowest</button>
@@ -27,7 +27,8 @@ export default {
   data() {
     return {
       ideas: [],
-      sortOrder: "lowest"
+      sortOrder: "lowest",
+      searchParams: "",
     }
   },
   computed: {
@@ -37,6 +38,9 @@ export default {
         return votes.sort((a, b) => b.upvotes - a.upvotes)
       } else if (this.sortOrder === "lowest") {
         return votes.sort((a, b) => a.upvotes - b.upvotes)
+      } else if (this.sortOrder === "search") {
+        let result = votes.filter(e => (e.title.toLowerCase().includes(this.searchParams)));
+        return result;
       }
       return 0;
     },
@@ -79,6 +83,11 @@ export default {
             this.ideas = JSON.parse(result);
           })
           .catch(error => console.log('error', error));
+    },
+    search(searchParams) {
+      console.log(searchParams)
+      this.sortOrder = "search"
+      this.searchParams = searchParams.toLowerCase()
     }
   }
 }
