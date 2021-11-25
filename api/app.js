@@ -1,8 +1,10 @@
 let express = require('express');
 let cookieParser = require('cookie-parser');
-const port = 3000
+let mysql = require("mysql")
 let app = express();
 let cors = require('cors');
+const util = require("util");
+
 app.use(cors());
 
 app.use(express.json());
