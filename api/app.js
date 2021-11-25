@@ -42,7 +42,24 @@ app.get("/", function(req, res){
   res.send("pöö")
 })
 
+app.post("/api/votes", urlencodedParser, function (req, res) {
+  let post = req.query.post;
 
+  if (post != null) {
+    let sql = "UPDATE idea_db SET upvotes = upvotes +1 "
+    + "WHERE id = ?";
+
+    (async () => {
+      try {
+        const result = await query(sql, [post]);
+        res.send("POST successful ");
+      } catch (err) {
+        console.log("Upvoting was not successful! " + err);
+        res.send("POST was not successful " + err);
+      }
+    })()
+  }
+})
 
 let server = app.listen(3000, "localhost", function () {
   let host = server.address().address

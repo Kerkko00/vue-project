@@ -40,7 +40,6 @@ export default {
       }
       return 0;
     },
-
   },
   methods: {
     sort(sortOrder) {
@@ -52,7 +51,6 @@ export default {
       }
     },
     upvote(id) {
-
       this.ideas.forEach(idea => {
         if (idea.id === id) {
           idea.upvotes++;
