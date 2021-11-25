@@ -5,6 +5,7 @@ let app = express();
 let cors = require('cors');
 const util = require("util");
 
+let bodyParser = require('body-parser');
 app.use(cors());
 
 app.use(express.json());
@@ -29,9 +30,7 @@ app.get("/api/ideas", function(req,res){
   (async () => {
     try {
       const result = await query(sql);
-      let string = JSON.stringify(result);
-      //let alteredResult = '{"numOfRows":'+result.length+',"rows":'+string+'}';
-      res.send(string);
+      res.send(result);
     }
     catch (err) {
       console.log("Database error!"+ err);

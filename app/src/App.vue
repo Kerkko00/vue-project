@@ -5,7 +5,7 @@
       <button class="orderbutton" @click.prevent="sort('highest')">Sort by highest</button>
       <button class="orderbutton" @click.prevent="sort('lowest')">Sort by lowest</button>
     </div>
-    <template v-for="idea in orderByVotes" :key="idea">
+    <template v-for="idea in orderByVotes" :key="idea.id">
       <Content :idea="idea" @vote="upvote"/>
     </template>
   </div>
@@ -21,25 +21,22 @@ export default {
     Navbar,
     Content,
   },
+  created(){
+    this.fetchData();
+  },
   data() {
     return {
-      ideas: [
-        {id: 2, title: "Something", desc: "This is something cool", user: "bob", upvotes: 12},
-        {id: 4, title: "Something else", desc: "This is something super cool ", user: "sam", upvotes: 15},
-        {id: 3, title: "Something sick", desc: "This is something amazingly cool", user: "joe", upvotes: 23},
-        {id: 1, title: "Something crazy", desc: "This is something amazingly crazy", user: "kek", upvotes: 33},
-
-      ],
+      ideas: [],
       sortOrder: "lowest"
     }
   },
   computed: {
     orderByVotes() {
-      let orderByVotes = this.ideas;
+      let votes = this.ideas;
       if (this.sortOrder === "highest") {
-        return orderByVotes.sort((a, b) => b.upvotes - a.upvotes)
+        return votes.sort((a, b) => b.upvotes - a.upvotes)
       } else if (this.sortOrder === "lowest") {
-        return orderByVotes.sort((a, b) => a.upvotes - b.upvotes)
+        return votes.sort((a, b) => a.upvotes - b.upvotes)
       }
       return 0;
     },
@@ -61,8 +58,21 @@ export default {
           idea.upvotes++;
         }
       })
-    }
+    },
+    async fetchData(){
+      let requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+      };
 
+      await fetch("http://127.0.0.1:3000/api/ideas", requestOptions)
+          .then(response => response.text())
+          .then(result => {
+            console.log(JSON.parse(result))
+            this.ideas = JSON.parse(result);
+          })
+          .catch(error => console.log('error', error));
+    }
   }
 }
 </script>

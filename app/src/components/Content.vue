@@ -2,12 +2,12 @@
   <div>
     <ul>
       <li id="title">{{ idea.title }}</li>
-      <li id="desc">{{ idea.desc }}</li>
+      <li id="desc">{{ idea.description }}</li>
       <li id="upvotes">
         <button v-on:click="vote">&uArr;</button>
         {{ idea.upvotes }}
       </li>
-      <li id="user">By {{ idea.user }}</li>
+      <li id="author">By {{ idea.author }}</li>
     </ul>
   </div>
 </template>
