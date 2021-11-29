@@ -1,10 +1,7 @@
 <template>
   <div>
     <Navbar @search="search"/>
-    <div class="buttons">
-      <button class="orderbutton" @click.prevent="sort('highest')">Sort by highest</button>
-      <button class="orderbutton" @click.prevent="sort('lowest')">Sort by lowest</button>
-    </div>
+    <Sort @sort="sort"/>
     <template v-for="idea in orderByVotes" :key="idea.id">
       <Content :idea="idea" @vote="upvote"/>
     </template>
@@ -15,12 +12,14 @@
 <script>
 import Navbar from "./components/Navbar.vue"
 import Content from "./components/Content.vue"
+import Sort from "./components/Sort.vue"
 
 export default {
   name: 'App',
   components: {
     Navbar,
     Content,
+    Sort,
   },
   created(){
     this.fetchData();
@@ -104,6 +103,10 @@ html {
   font-family: Arial, sans-serif;
 }
 
+body {
+  margin: 0;
+}
+
 ul {
   padding: 0;
   margin: 0;
@@ -113,34 +116,6 @@ li {
   list-style-type: none;
 }
 
-.orderbutton {
-  background-color: white;
-  color: black;
-  border: 2px solid #555555;
-  padding: 6px 14px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.orderbutton:hover {
-  background-color: #555555;
-  color: white;
-  border: 2px solid #555555;
-}
-
-.buttons {
-  margin: 15px 5px;
-  display: flex;
-  justify-content: flex-end;
-  margin: 0em 1em;
-  margin-top: 1em;
-}
 #noresults {
   text-align: center;
 }
