@@ -14,7 +14,7 @@ app.use(cookieParser());
 
 let urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json({ type: 'application/*+json' }));
+app.use(bodyParser.json());
 
 let con = mysql.createConnection({
   host: "mysql.metropolia.fi",
@@ -43,6 +43,7 @@ app.get("/", function(req, res){
 })
 
 app.post("/api/votes", urlencodedParser, function (req, res) {
+
   let post = req.query.post;
 
   if (post != null) {

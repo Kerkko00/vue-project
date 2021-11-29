@@ -9,6 +9,7 @@
       </li>
       <li id="author">By {{ idea.author }}</li>
     </ul>
+    <button @click.prevent="deleteIdea">Delete</button>
   </div>
 </template>
 
@@ -22,6 +23,9 @@ export default {
     vote() {
 
       return this.$emit("vote", this.idea.id)
+    },
+    deleteIdea(){
+      return this.$emit("delete", this.idea.id)
     }
   },
   props: {

@@ -3,7 +3,7 @@
     <Navbar @search="search"/>
     <Sort @sort="sort"/>
     <template v-for="idea in orderByVotes" :key="idea.id">
-      <Content :idea="idea" @vote="upvote"/>
+      <Content :idea="idea" @vote="upvote" @delete="deleteIdea"/>
     </template>
     <div id="noresults" v-show="!orderByVotes.length">No results</div>
   </div>
@@ -41,6 +41,7 @@ export default {
         return votes.sort((a, b) => a.upvotes - b.upvotes)
       } else if (this.sortOrder === "search") {
         let result = votes.filter(e => (e.title.toLowerCase().includes(this.searchParams)));
+
         return result;
       }
       return 0;
