@@ -52,11 +52,50 @@ app.post("/api/votes", urlencodedParser, function (req, res) {
 
     (async () => {
       try {
-        const result = await query(sql, [post]);
+        await query(sql, [post]);
         res.send("POST successful ");
       } catch (err) {
         console.log("Upvoting was not successful! " + err);
         res.send("POST was not successful " + err);
+      }
+    })()
+  }
+})
+
+app.post("/api/postIdea", urlencodedParser, function (req, res) {
+  console.log("body: %j", req.body);
+  let jsonObj = req.body;
+
+  if (jsonObj != null) {
+    let sql = "INSERT INTO idea_db (title, description, author, upvotes)"
+        + " VALUES (?, ?, ?, 0)";
+    (async () => {
+      try {
+        const result = await query(sql, [jsonObj.title, jsonObj.description, jsonObj.author, jsonObj.upvotes]);
+        console.log(result)
+        res.json(result.insertId)
+
+      } catch (err) {
+        console.log("Insertion into table was unsuccessful!" + err);
+        res.sendStatus(400)
+        res.send("POST was not succesful " + err);
+      }
+    })()
+  }
+})
+
+app.delete("/api/deleteIdea", urlencodedParser, function (req, res) {
+  console.log( req.query.id);
+  let id = req.query.id;
+  if (id != null) {
+    let sql = "DELETE FROM idea_db WHERE id=?";
+    (async () => {
+      try {
+        await query(sql, [id]);
+        res.send("DELETE was successful")
+      } catch (err) {
+        console.log("Deletion into table was unsuccessful!" + err);
+        res.send("DELETE was not succesful " + err);
       }
     })()
   }

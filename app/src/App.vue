@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar @search="search"/>
-    <Sort @sort="sort"/>
+    <ContentManager @sort-order="sort" @ideaContents="addIdea"/>
     <template v-for="idea in orderByVotes" :key="idea.id">
       <Content :idea="idea" @vote="upvote" @delete="deleteIdea"/>
     </template>
@@ -12,14 +12,14 @@
 <script>
 import Navbar from "./components/Navbar.vue"
 import Content from "./components/Content.vue"
-import Sort from "./components/Sort.vue"
+import ContentManager from "./components/ContentManager.vue"
 
 export default {
   name: 'App',
   components: {
     Navbar,
     Content,
-    Sort,
+    ContentManager,
   },
   created(){
     this.fetchData();
@@ -48,7 +48,6 @@ export default {
     },
   },
   methods: {
-
     sort(sortOrder) {
       switch (sortOrder) {
         case "highest":
@@ -94,6 +93,40 @@ export default {
       this.sortOrder = "search"
       this.searchParams = searchParams.toLowerCase()
       if(searchParams == "") this.sortOrder = "highest";
+    },
+    addIdea(title, description) {
+      console.log(title, description)
+      let raw = JSON.stringify({
+        "title": title,
+        "description": description,
+        "author": "anonymous"
+      });
+      let myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("X-Requested-With", "xmlhttprequest");
+
+      let requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+
+      fetch("http://localhost:3000/api/postIdea", requestOptions)
+          .then(response => response.text())
+          .then(result => this.ideas.push({id: result, title: title, description: description, author: "anonymous", upvotes: 0}))
+          .catch(error => console.log('error', error));
+    },
+    deleteIdea(id){
+      let requestOptions = {
+        method: 'DELETE',
+        redirect: 'follow'
+      }
+      fetch(`http://127.0.0.1:3000/api/deleteIdea?id=${id}`, requestOptions)
+          .then(response => response.text())
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
+      this.ideas = this.ideas.filter(e => (e.id != id));
     }
   }
 }
