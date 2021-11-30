@@ -4,6 +4,8 @@ let mysql = require("mysql")
 let app = express();
 let cors = require('cors');
 const util = require("util");
+const path = require('path');
+const indexRouter = require('./router.js');
 
 let bodyParser = require('body-parser');
 app.use(cors());
@@ -15,6 +17,8 @@ app.use(cookieParser());
 let urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use('/api/users', indexRouter);
 
 let con = mysql.createConnection({
   host: "mysql.metropolia.fi",
