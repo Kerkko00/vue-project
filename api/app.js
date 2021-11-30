@@ -28,8 +28,6 @@ let con = mysql.createConnection({
 });
 const query = util.promisify(con.query).bind(con);
 
-
-
 app.get("/api/ideas", function(req,res){
   let sql = "SELECT * FROM idea_db";
 
