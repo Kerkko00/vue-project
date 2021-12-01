@@ -41,7 +41,7 @@ export default {
       fetch("http://localhost:3000/api/users/register", requestOptions)
           .then(response => {
             console.log(response)
-            if (response.status === 200) {
+            if (response.status === 201) {
               this.$router.push({name: "Home"})
             }
             return response.text()
