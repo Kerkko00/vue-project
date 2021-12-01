@@ -54,7 +54,7 @@ export default {
       localStorage.removeItem("token")
       localStorage.removeItem("user")
       this.token = "",
-        this.user = "",
+      this.user = "",
       this.loggedin = false;
     }
   }
