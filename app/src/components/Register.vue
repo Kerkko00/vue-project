@@ -1,4 +1,5 @@
 <template>
+  <div>
 <h1>Register</h1>
   <form>
     <label for="username">Username: </label>
@@ -9,6 +10,7 @@
     <br><br>
     <button type="submit" class="button" @click.prevent="register">Register</button>
   </form>
+  </div>
 </template>
 
 <script>

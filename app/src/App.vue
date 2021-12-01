@@ -13,12 +13,13 @@
         <li class="navbtn"><router-link to="/register">Register</router-link></li>
       </ul>
       <ul v-else>
-        <li class="navbtn"><a href="#">My ideas</a></li>
-        <li class="navbtn"><a href="#">Log out</a></li>
+        <li class="navbtn"><a href="#">Hei, {{ user }}</a></li>
+        <li class="navbtn"><a href="#" @click.prevent="logout">Log out</a></li>
       </ul>
     </ul>
   </nav>
-  <router-view :searchP="searchParams"/>
+  <router-view :searchP="searchParams" @login="storage"/>
+
   </div>
 </template>
 
@@ -27,9 +28,34 @@ export default {
   name: 'App',
   components: {
   },
+  mounted(){
+    this.storage();
+  },
   data(){
     return {
+    token: "",
+      user: "",
+      loggedin: false,
       searchParams: "",
+    }
+  },
+  methods: {
+    storage(){
+      let token = localStorage.getItem("token")
+      let user = localStorage.getItem("user")
+      console.log("testi " + user)
+      if(token != null && user != null) {
+        this.loggedin = true;
+        this.token = token;
+        this.user = user;
+      }
+    },
+    logout(){
+      localStorage.removeItem("token")
+      localStorage.removeItem("user")
+      this.token = "",
+        this.user = "",
+      this.loggedin = false;
     }
   }
 }

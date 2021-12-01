@@ -5,7 +5,7 @@ const mysql = require("mysql")
 const util = require("util");
 const path = require('path');
 const indexRouter = require('./router.js');
-
+const jwt = require("jsonwebtoken")
 const bodyParser = require('body-parser');
 const cors = require('cors');
 app.use(cors());
@@ -28,6 +28,22 @@ let con = mysql.createConnection({
 });
 const query = util.promisify(con.query).bind(con);
 
+function checkToken(req, res){
+  if(
+      !req.headers.authorization ||
+      !req.headers.authorization.startsWith('Bearer') ||
+      !req.headers.authorization.split(' ')[1]
+  ){
+    return res.status(422).json({
+      message: "Please provide the token",
+    });
+  }
+  const theToken = req.headers.authorization.split(' ')[1];
+  const decoded = jwt.verify(theToken, 'jfhkhfkerhgt4345jkfsdjkhf');
+
+  return decoded;
+}
+
 app.get("/api/ideas", function(req,res){
   let sql = "SELECT * FROM idea_db";
 
@@ -47,7 +63,7 @@ app.get("/", function(req, res){
 })
 
 app.post("/api/votes", urlencodedParser, function (req, res) {
-
+  checkToken(req,res)
   let post = req.query.post;
 
   if (post != null) {

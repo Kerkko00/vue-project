@@ -1,4 +1,5 @@
 <template>
+  <div>
 <h1>Login</h1>
   <form>
     <label for="username">Username: </label>
@@ -9,6 +10,7 @@
     <br><br>
     <button type="submit" class="button" @click.prevent="login">Login</button>
   </form>
+  </div>
 </template>
 
 <script>
@@ -44,7 +46,18 @@ export default {
             }
            return response.text()
           })
-          .then(result => console.log(result))
+          .then(result => {
+            console.log(result)
+            let msg = JSON.parse(result)
+            console.log(msg.token)
+            console.log(msg.user.username)
+            if (msg.token) {
+              // store user details and jwt token in local storage to keep user logged in between page refreshes
+              localStorage.setItem('token', msg.token);
+              localStorage.setItem("user", msg.user.username);
+              this.$emit("login");
+            }
+          })
           .catch(error => console.log('error', error));
     }
   }
