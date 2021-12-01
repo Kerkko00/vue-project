@@ -10,18 +10,19 @@
       </div>
     </div>
 
-  <div class="modal" id="addModal"  :style="{'display': showAddModal ? 'block' : 'none'}">
-    <div class="modalContent">
-      <button class="close" @click.prevent="showAddModal = false">&times;</button>
-      <h2>Add Idea</h2>
-      <form>
-        <label for="title">Title: </label>
-        <input type="text" id="title" name="title" v-model="title"/>
-        <br><br>
-        <p>Description: </p>
-        <textarea id="description" v-model="description"></textarea>
-        <button type="submit" class="button" @click.prevent="addIdea">Add</button>
-      </form>
+    <div class="modal" id="addModal" :style="{'display': showAddModal ? 'block' : 'none'}">
+      <div class="modalContent">
+        <button class="close" @click.prevent="showAddModal = false">&times;</button>
+        <h2>Add Idea</h2>
+        <form>
+          <label for="title">Title: </label>
+          <input type="text" id="title" name="title" v-model="title"/>
+          <br><br>
+          <p>Description: </p>
+          <textarea id="description" v-model="description"></textarea>
+          <button type="submit" class="button" @click.prevent="addIdea">Add</button>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -34,6 +35,7 @@ export default {
       showAddModal: false,
       title: "",
       description: "",
+      loggedin: this.logged,
     }
   },
   watch: {
@@ -42,10 +44,10 @@ export default {
     }
   },
   methods: {
-    sort(order){
+    sort(order) {
       this.$emit("sort-order", order);
     },
-    addIdea(){
+    addIdea() {
       this.$emit("ideaContents", this.title, this.description);
       this.showAddModal = false;
     },
@@ -91,8 +93,8 @@ export default {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modalContent {
@@ -102,8 +104,8 @@ export default {
   border: 1px solid #888;
   border-radius: 5px;
   width: 80%; /* Could be more or less, depending on screen size */
-  -webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.85);
-  box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.85);
+  -webkit-box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.85);
+  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.85);
 }
 
 .modalContent h2 {

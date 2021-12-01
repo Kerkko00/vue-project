@@ -18,7 +18,7 @@
       </ul>
     </ul>
   </nav>
-  <router-view :searchP="searchParams" @login="storage"/>
+  <router-view :searchP="searchParams" :logged="loggedin" @login="storage"/>
 
   </div>
 </template>
