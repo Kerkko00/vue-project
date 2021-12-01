@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ContentManager @sort-order="sort" @ideaContents="addIdea"/>
+    <ContentManager @sort-order="sort" @ideaContents="addIdea" :logged="logged"/>
     <template v-for="idea in orderByVotes" :key="idea.id">
       <Content :idea="idea" @vote="upvote" @delete="deleteIdea"/>
     </template>
@@ -54,7 +54,7 @@ export default {
       return 0;
     },
   },
-  props: ["searchP"],
+  props: ["searchP", "logged"],
   methods: {
     sort(sortOrder) {
       switch (sortOrder) {

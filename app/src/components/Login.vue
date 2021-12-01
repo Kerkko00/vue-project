@@ -60,7 +60,8 @@ export default {
           })
           .catch(error => console.log('error', error));
     }
-  }
+  },
+  emits: ["login"]
 }
 </script>
 

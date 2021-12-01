@@ -1,13 +1,14 @@
 <template>
-  <div class="buttons">
-    <div>
-      <button class="button" @click.prevent="showAddModal = true">Add idea</button>
+  <div>
+    <div class="buttons">
+      <div>
+        <button v-if="this.loggedin" class="button" @click.prevent="showAddModal = true">Add idea</button>
+      </div>
+      <div>
+        <button class="button" @click.prevent="sort('highest')">Sort by highest</button>
+        <button class="button" @click.prevent="sort('lowest')">Sort by lowest</button>
+      </div>
     </div>
-    <div>
-      <button class="button" @click.prevent="sort('highest')">Sort by highest</button>
-      <button class="button" @click.prevent="sort('lowest')">Sort by lowest</button>
-    </div>
-  </div>
 
   <div class="modal" id="addModal"  :style="{'display': showAddModal ? 'block' : 'none'}">
     <div class="modalContent">
@@ -35,6 +36,11 @@ export default {
       description: "",
     }
   },
+  watch: {
+    logged(newVal){
+      this.loggedin = newVal;
+    }
+  },
   methods: {
     sort(order){
       this.$emit("sort-order", order);
@@ -44,7 +50,8 @@ export default {
       this.showAddModal = false;
     },
   },
-  emits: ["sort-order", "ideaContents"]
+  emits: ["sort-order", "ideaContents"],
+  props: ["logged"],
 }
 </script>
 
