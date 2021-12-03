@@ -2,7 +2,7 @@
   <div>
     <ContentManager @sort-order="sort" @ideaContents="addIdea" :logged="logged"/>
     <template v-for="idea in orderByVotes" :key="idea.id">
-      <Content :idea="idea" @vote="upvote" @delete="deleteIdea"/>
+      <Content :idea="idea" @vote="upvote" @delete="deleteIdea" :user="user"/>
     </template>
     <div id="noresults" v-show="!orderByVotes.length">No results</div>
   </div>
@@ -75,7 +75,10 @@ export default {
       });
       let requestOptions = {
         method: 'POST',
-        redirect: 'follow'
+        redirect: 'follow',
+        headers: {
+          'Authorization': 'Bearer ' + this.token,
+        },
       };
 
       fetch(`http://127.0.0.1:3000/api/votes?post=${id}`, requestOptions)
@@ -109,11 +112,11 @@ export default {
       let raw = JSON.stringify({
         "title": title,
         "description": description,
-        "author": "anonymous"
       });
       let myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("X-Requested-With", "xmlhttprequest");
+      myHeaders.append("Authorization", "Bearer " + this.token);
 
       let requestOptions = {
         method: 'POST',
@@ -124,13 +127,16 @@ export default {
 
       fetch("http://localhost:3000/api/postIdea", requestOptions)
           .then(response => response.text())
-          .then(result => this.ideas.push({id: result, title: title, description: description, author: "anonymous", upvotes: 0}))
+          .then(result => this.ideas.push({id: result, title: title, description: description, author: this.user, upvotes: 0}))
           .catch(error => console.log('error', error));
     },
     deleteIdea(id){
       let requestOptions = {
         method: 'DELETE',
-        redirect: 'follow'
+        redirect: 'follow',
+        headers: {
+          'Authorization': 'Bearer ' + this.token,
+        },
       }
       fetch(`http://127.0.0.1:3000/api/deleteIdea?id=${id}`, requestOptions)
           .then(response => response.text())

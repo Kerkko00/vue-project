@@ -13,7 +13,7 @@
         <li class="navbtn"><router-link to="/register">Register</router-link></li>
       </ul>
       <ul v-else>
-        <li class="navbtn"><a href="#">Hei, {{ user }}</a></li>
+        <li class="navbtn"><a>Hei, {{ user }}</a></li>
         <li class="navbtn"><a href="#" @click.prevent="logout">Log out</a></li>
       </ul>
     </ul>

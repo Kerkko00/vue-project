@@ -28,7 +28,7 @@ let con = mysql.createConnection({
 });
 const query = util.promisify(con.query).bind(con);
 
-function checkToken(req) {
+function checkToken(req, res) {
     if (
         !req.headers.authorization ||
         !req.headers.authorization.startsWith('Bearer') ||
@@ -36,10 +36,15 @@ function checkToken(req) {
     ) {
         return null;
     }
-    const theToken = req.headers.authorization.split(' ')[1];
+
+    try {
+        const theToken = req.headers.authorization.split(' ')[1];
     const decoded = jwt.verify(theToken, 'jfhkhfkerhgt4345jkfsdjkhf');
 
     return decoded;
+    }catch(e){
+        res.send("Wrong JWT")
+    }
 }
 
 app.get("/api/ideas", function (req, res) {

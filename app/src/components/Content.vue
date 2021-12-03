@@ -17,7 +17,8 @@
 export default {
   name: "Content",
   data() {
-    return {}
+    return {
+    }
   },
   methods: {
     vote() {
