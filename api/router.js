@@ -6,6 +6,8 @@ const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 router.post('/register', signupValidation, (req, res, next) => {
+    if(req.body.username.length >= 30){res.status(409).send({msg: "Username is too long!"})}
+    if(req.body.password.length >= 254){res.status(409).send({msg: "Password is too long!"})}
     db.query(
         `SELECT * FROM users WHERE LOWER(username) = LOWER(${db.escape(
             req.body.username

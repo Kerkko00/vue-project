@@ -74,14 +74,14 @@ app.post("/api/votes", urlencodedParser, function (req, res) {
         (async () => {
             try {
                 let response = await query(voterssql, [post]);
-                voters = JSON.stringify(response[0].voters)
-                console.log(voters)
+                voters = response[0].voters.toString()
+                console.log(response[0].voters.toString())
             } catch (err) {
                 console.log("Upvoting was not successful! " + err);
             }
             //Check if voters contain decoded.user
             if (!voters.includes(decoded.id)) {
-                voters = voters.substring(1, voters.length - 1)
+
                 let votersArray = voters.split(',')
                 console.log(votersArray)
                 votersArray.push(decoded.id.toString())
