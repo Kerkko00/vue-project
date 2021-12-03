@@ -66,7 +66,7 @@ app.get("/", function (req, res) {
 
 app.post("/api/votes", urlencodedParser, function (req, res) {
     let post = req.query.post;
-    let decoded = checkToken(req)
+    let decoded = checkToken(req, res)
     if (post != null && decoded != null) {
         //Get voters
         let voters = "";
@@ -111,7 +111,7 @@ app.post("/api/votes", urlencodedParser, function (req, res) {
 app.post("/api/postIdea", urlencodedParser, function (req, res) {
     console.log("body: %j", req.body);
     let jsonObj = req.body;
-    let decoded = checkToken(req)
+    let decoded = checkToken(req, res)
     if (jsonObj != null && decoded != null) {
         let sql = "INSERT INTO idea_db (title, description, author, upvotes)"
             + " VALUES (?, ?, ?, 0)";
@@ -133,7 +133,7 @@ app.post("/api/postIdea", urlencodedParser, function (req, res) {
 app.delete("/api/deleteIdea", urlencodedParser, function (req, res) {
     console.log(req.query.id);
     let id = req.query.id;
-    let decoded = checkToken(req)
+    let decoded = checkToken(req, res)
     if (id != null && decoded != null) {
         let sql = "DELETE FROM idea_db WHERE id=? AND author = ?";
         (async () => {

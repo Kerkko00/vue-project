@@ -47,14 +47,14 @@ export default {
       } else if (this.sortOrder === "lowest") {
         return votes.sort((a, b) => a.upvotes - b.upvotes)
       } else if (this.sortOrder === "search") {
-        let result = votes.filter(e => (e.title.toLowerCase().includes(this.searchParams)));
-
-        return result;
+        return votes.filter(e => (e.title.toLowerCase().includes(this.searchParams)));
+      } else if (this.sortOrder === "own") {
+        return votes.filter(e => (e.author === this.user));
       }
       return 0;
     },
   },
-  props: ["searchP", "logged"],
+  props: ["searchP", "logged", "token", "user", "order"],
   methods: {
     sort(sortOrder) {
       switch (sortOrder) {

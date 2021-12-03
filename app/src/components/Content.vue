@@ -9,7 +9,7 @@
       </li>
       <li id="author">By {{ idea.author }}</li>
     </ul>
-    <button @click.prevent="deleteIdea">Delete</button>
+    <button v-if="idea.author === this.user" @click.prevent="deleteIdea">Delete</button>
   </div>
 </template>
 
@@ -31,6 +31,7 @@ export default {
   },
   props: {
     idea: Object,
+    user: String
   },
 }
 </script>

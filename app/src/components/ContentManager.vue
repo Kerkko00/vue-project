@@ -3,6 +3,7 @@
     <div class="buttons">
       <div>
         <button v-if="this.loggedin" class="button" @click.prevent="showAddModal = true">Add idea</button>
+        <button v-if="this.loggedin" class="button" @click.prevent="sort('own')">My ideas</button>
       </div>
       <div>
         <button class="button" @click.prevent="sort('highest')">Sort by highest</button>
