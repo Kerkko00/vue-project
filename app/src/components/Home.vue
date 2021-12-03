@@ -62,6 +62,8 @@ export default {
           return this.sortOrder = "highest";
         case "lowest":
           return this.sortOrder = "lowest";
+        case "own":
+          return this.sortOrder = "own";
       }
     },
     //Saves upvotes to database with REST api

@@ -2,7 +2,7 @@
   <div>
   <nav class="navbar">
     <ul>
-      <li class="navbtn"><router-link to="/">Home</router-link></li>
+      <li class="navbtn"><router-link to="/" @click.prevent="reload">Home</router-link></li>
       <li class="navbtn" id="search">
         <form>
           <input type="text" placeholder="Search" v-model="searchParams"/>
@@ -18,7 +18,7 @@
       </ul>
     </ul>
   </nav>
-  <router-view :searchP="searchParams" :logged="loggedin" @login="storage"/>
+  <router-view :searchP="searchParams" :logged="loggedin" :token="token" :user="user" @login="storage"/>
 
   </div>
 </template>
@@ -56,6 +56,11 @@ export default {
       this.token = "",
       this.user = "",
       this.loggedin = false;
+    },
+    reload() {
+      if (this.$route.path === "/") {
+        location.reload();
+      }
     }
   }
 }
