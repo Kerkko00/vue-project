@@ -1,14 +1,14 @@
 <template>
   <div>
 <h1>Login</h1>
-  <form>
+  <form  @click.prevent="login">
     <label for="username">Username: </label>
-    <input type="text" id="username" name="username" v-model="username"/>
+    <input type="text" id="username" name="username" v-model="username" required/>
     <br><br>
     <label for="password">Password: </label>
     <input type="password" id="password" name="password" v-model="password"/>
     <br><br>
-    <button type="submit" class="button" @click.prevent="login">Login</button>
+    <input type="submit" class="button" value="Login" />
   </form>
   </div>
 </template>

@@ -83,7 +83,14 @@ export default {
 
       fetch(`http://127.0.0.1:3000/api/votes?post=${id}`, requestOptions)
           .then(response => response.text())
-          .then(result => console.log(result))
+          .then(result => {
+            if(result == "Wrong JWT"){
+              console.log("logging out")
+              this.$emit("logout");
+              this.$emit.push({name: "Login"})
+            }
+            console.log(result)
+          })
           .catch(error => console.log('error', error));
     },
     //Fetches idea data from REST api
@@ -127,7 +134,14 @@ export default {
 
       fetch("http://localhost:3000/api/postIdea", requestOptions)
           .then(response => response.text())
-          .then(result => this.ideas.push({id: result, title: title, description: description, author: this.user, upvotes: 0}))
+          .then(result => {
+            if(result == "Wrong JWT"){
+              console.log("logging out")
+              this.$emit("logout");
+              this.$router.push({name: "Login"})
+            }
+            this.ideas.push({id: result, title: title, description: description, author: this.user, upvotes: 0})
+          })
           .catch(error => console.log('error', error));
     },
     deleteIdea(id){
@@ -140,7 +154,14 @@ export default {
       }
       fetch(`http://127.0.0.1:3000/api/deleteIdea?id=${id}`, requestOptions)
           .then(response => response.text())
-          .then(result => console.log(result))
+          .then(result => {
+            console.log(result)
+            if(result == "Wrong JWT"){
+              console.log("logging out")
+              this.$emit("logout");
+              this.$router.push({name: "Login"})
+            }
+          })
           .catch(error => console.log('error', error));
       this.ideas = this.ideas.filter(e => (e.id != id));
     }
