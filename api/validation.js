@@ -6,5 +6,5 @@ exports.signupValidation = [
 ]
 
 exports.loginValidation = [
-    check('password', 'Password must be 6 or more characters').isLength({ min: 6 })
+    check('password', 'Password must be less than 254 characters or 6 or more characters').isLength({ min: 6, max: 254 })
 ]

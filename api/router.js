@@ -6,11 +6,15 @@ const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 router.post('/register', signupValidation, (req, res, next) => {
-    if(req.body.username.length >= 30){res.status(409).send({msg: "Username is too long!"})}
-    if(req.body.password.length >= 254){res.status(409).send({msg: "Password is too long!"})}
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
+
     db.query(
         `SELECT * FROM users WHERE LOWER(username) = LOWER(${db.escape(
-            req.body.username
+            req.body.username.split(" ").join("")
         )});`,
         (err, result) => {
             if (result.length) {
@@ -27,7 +31,7 @@ router.post('/register', signupValidation, (req, res, next) => {
                     } else {
 // has hashed pw => add to database
                         db.query(
-                            `INSERT INTO users (username, password) VALUES ('${req.body.username}', ${db.escape(hash)})`,
+                            `INSERT INTO users (username, password) VALUES ('${req.body.username.split(" ").join("")}', ${db.escape(hash)})`,
                             (err, result) => {
                                 if (err) {
                                     throw err;
