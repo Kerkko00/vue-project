@@ -6,7 +6,7 @@
     <input type="text" id="username" name="username" v-model="username" required/>
     <br><br>
     <label for="password">Password: </label>
-    <input type="password" id="password" name="password" v-model="password"/>
+    <input type="password" id="password" name="password" v-model="password" required/>
     <br><br>
     <input type="submit" class="button" value="Login" />
   </form>
