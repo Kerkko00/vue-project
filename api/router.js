@@ -51,6 +51,12 @@ router.post('/register', signupValidation, (req, res, next) => {
     );
 });
 router.post('/login', loginValidation, (req, res, next) => {
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
+
     db.query(
         `SELECT * FROM users WHERE username = ${db.escape(req.body.username)};`,
         (err, result) => {
