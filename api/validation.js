@@ -1,8 +1,9 @@
 const { check } = require('express-validator');
 
 exports.signupValidation = [
-    check('name', 'Name is requied').not().isEmpty(),
-    check('password', 'Password must be 6 or more characters').isLength({ min: 6 })
+    check('username', 'Name is requied').not().isEmpty(),
+    check('username', 'Name length is invalid').isLength({min: 1, max: 30}),
+    check('password', 'Password must be less than 254 characters or 6 or more characters').isLength({ min: 6, max: 254 })
 ]
 
 exports.loginValidation = [

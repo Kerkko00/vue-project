@@ -3,10 +3,10 @@
     <h1>Register</h1>
     <form @submit.prevent="register">
       <label for="username">Username: </label>
-      <input type="text" id="username" name="username" v-model="username" maxlength="30" required/>
+      <input type="text" id="username" name="username" v-model="username" maxlength="30" pattern="[A-Za-z]{1,}" required/>
       <br><br>
       <label for="password">Password: </label>
-      <input type="password" id="password" name="password" pattern=".{6,}" v-model="password" maxlength="254" required/>
+      <input type="password" id="password" name="password" pattern="([A-Za-z]{1,}).{6,}" v-model="password" maxlength="254" required/>
       <br><br>
       <label for="confirmPassword">Confirm Password: </label>
       <input type="password" id="confirmPassword" name="confirmPassword" required/>
