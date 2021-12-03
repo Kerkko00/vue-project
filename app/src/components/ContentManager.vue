@@ -16,11 +16,11 @@
         <button class="close" @click.prevent="showAddModal = false">&times;</button>
         <h2>Add Idea</h2>
         <form>
-          <label for="title">Title: </label>
+          <label for="title" maxlength="65">Title: </label>
           <input type="text" id="title" name="title" v-model="title"/>
           <br><br>
           <p>Description: </p>
-          <textarea id="description" v-model="description"></textarea>
+          <textarea id="description" v-model="description" maxlength="2000"></textarea>
           <button type="submit" class="button" @click.prevent="addIdea">Add</button>
         </form>
       </div>

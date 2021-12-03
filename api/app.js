@@ -61,7 +61,7 @@ app.get("/api/ideas", function (req, res) {
 })
 
 app.get("/", function (req, res) {
-    res.send("pöö")
+    res.send("blank")
 })
 
 app.post("/api/votes", urlencodedParser, function (req, res) {
@@ -83,19 +83,21 @@ app.post("/api/votes", urlencodedParser, function (req, res) {
             if (!voters.includes(decoded.id)) {
 
                 let votersArray = voters.split(',')
+                if(votersArray[0] === "") {
+                    votersArray.shift()
+                }
                 console.log(votersArray)
                 votersArray.push(decoded.id.toString())
                 voters = votersArray.toString()
-                console.log("votersien id: " + voters)
+                console.log("voter ids: " + voters)
 
                 let sql = "UPDATE idea_db SET upvotes = upvotes +1, voters = ?"
                     + "WHERE id = ?";
 
                 try {
-                    console.log(post + "" + voters)
-                    let v = await query(sql, [voters, post]);
-                    console.log(v)
-                    console.log("tapahtuuko tämä")
+                    console.log("id of the post: " + post + ", users who have voted: " + voters)
+                    let q = await query(sql, [voters, post]);
+                    console.log(q)
                     res.send("POST successful ");
                 } catch (err) {
                     console.log("Upvoting was not successful! " + err);
