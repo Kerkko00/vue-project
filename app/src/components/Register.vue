@@ -1,15 +1,18 @@
 <template>
   <div>
-<h1>Register</h1>
-  <form>
-    <label for="username">Username: </label>
-    <input type="text" id="username" name="username" v-model="username"/>
-    <br><br>
-    <label for="password">Password: </label>
-    <input type="password" id="password" name="password" v-model="password"/>
-    <br><br>
-    <button type="submit" class="button" @click.prevent="register">Register</button>
-  </form>
+    <h1>Register</h1>
+    <form @submit.prevent="register">
+      <label for="username">Username: </label>
+      <input type="text" id="username" name="username" v-model="username" required/>
+      <br><br>
+      <label for="password">Password: </label>
+      <input type="password" id="password" name="password" pattern=".{6,}" v-model="password" required/>
+      <br><br>
+      <label for="confirmPassword">Confirm Password: </label>
+      <input type="password" id="confirmPassword" name="confirmPassword" required/>
+      <br><br>
+      <input type="submit" class="button" value="Register">
+    </form>
   </div>
 </template>
 
@@ -27,27 +30,32 @@ export default {
       let myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
-      let urlencoded = new URLSearchParams();
-      urlencoded.append("username", this.username);
-      urlencoded.append("password", this.password);
+      let confirmPassword = document.getElementById('confirmPassword')
+      if (this.password === confirmPassword.value) {
+        let urlencoded = new URLSearchParams();
+        urlencoded.append("username", this.username);
+        urlencoded.append("password", this.password);
 
-      let requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: urlencoded,
-        redirect: 'follow'
-      };
+        let requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: urlencoded,
+          redirect: 'follow'
+        };
 
-      fetch("http://localhost:3000/api/users/register", requestOptions)
-          .then(response => {
-            console.log(response)
-            if (response.status === 201) {
-              this.$router.push({name: "Home"})
-            }
-            return response.text()
-          })
-          .then(result => console.log(result))
-          .catch(error => console.log('error', error));
+        fetch("http://localhost:3000/api/users/register", requestOptions)
+            .then(response => {
+              console.log(response)
+              if (response.status === 201) {
+                this.$router.push({name: "Home"})
+              }
+              return response.text()
+            })
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+      } else {
+        alert("Passwords don't match")
+      }
     }
   }
 }
