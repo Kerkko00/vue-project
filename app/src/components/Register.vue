@@ -2,14 +2,20 @@
   <div id="content">
     <h1>Register</h1>
     <form @submit.prevent="register">
-      <label for="username">Username: </label>
-      <input type="text" id="username" name="username" v-model="username" maxlength="30" pattern="[A-Za-z]{1,}" required/>
+      <input type="text" id="username" class="userInput" name="username" placeholder="Username" v-model="username"
+             maxlength="30" pattern="[A-Za-z]{1,}" required
+             oninvalid="this.setCustomValidity('Username must be letters only and length between 1-30 characters')"
+             oninput="this.setCustomValidity('')"/>
       <br><br>
-      <label for="password">Password: </label>
-      <input type="password" id="password" name="password" pattern="([A-Za-z]{1,}).{6,}" v-model="password" maxlength="254" required/>
+      <input type="password" id="password" class="userInput" name="password" placeholder="Password" pattern=".{6,}"
+             v-model="password" maxlength="254" required
+             oninvalid="this.setCustomValidity('Password must be 6-254 characters long')"
+             oninput="this.setCustomValidity('')"/>
       <br><br>
-      <label for="confirmPassword">Confirm Password: </label>
-      <input type="password" id="confirmPassword" name="confirmPassword" required/>
+      <input type="password" id="confirmPassword" class="userInput" name="confirmPassword" placeholder="Confirm Password"
+             pattern=".{6,}" required
+             oninvalid="this.setCustomValidity('Please enter password again')"
+             oninput="this.setCustomValidity('')"/>
       <br><br>
       <input type="submit" class="button" value="Register">
     </form>
@@ -48,6 +54,8 @@ export default {
               console.log(response)
               if (response.status === 201) {
                 this.$router.push({name: "Home"})
+              } else if (response.status === 409) {
+                alert("Username already exists")
               }
               return response.text()
             })

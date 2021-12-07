@@ -13,7 +13,7 @@
         <li class="navbtn"><router-link to="/register">Register</router-link></li>
       </ul>
       <ul v-else>
-        <li class="navbtn"><a>Hei, {{ user }}</a></li>
+        <li class="navbtn"><a>Hey, {{ user }}</a></li>
         <li class="navbtn"><a href="#" @click.prevent="logout">Log out</a></li>
       </ul>
     </ul>
@@ -42,10 +42,9 @@ export default {
   },
   methods: {
     storage(){
-      let token = localStorage.getItem("token")
-      let user = localStorage.getItem("user")
-      console.log("testi " + user)
-      if(token != null && user != null) {
+    let data = localStorage.getItem("data");
+      if(data != null) {
+        let {token, user, user_id} = JSON.parse(data);
         this.loggedin = true;
         this.token = token;
         this.user = user;
@@ -69,6 +68,11 @@ export default {
 </script>
 
 <style>
+/*
+Colors:
+
+
+ */
 html {
   font-family: Arial, sans-serif;
 }
@@ -76,6 +80,7 @@ html {
 body {
   min-height:100vh;
   margin: 0;
+  background: linear-gradient(to bottom, #3C4B4D, #2C3531) no-repeat;
 }
 
 ul {
@@ -88,11 +93,11 @@ li {
 }
 
 .navbar {
-  background-color: lightsalmon;
+  background-color: #116466;
 }
 
 .navbtn a {
-  color: black;
+  color: white;
   text-decoration: none;
   font-weight: bold;
   padding: 1em;
@@ -106,7 +111,8 @@ li {
 }
 
 .navbtn:hover {
-  background-color: lightcoral;
+  background-color: #F15025;
+  transition-duration: 0.2s;
 }
 
 #search {
@@ -126,7 +132,44 @@ li {
 }
 
 #search input:focus {
-  border: 1px solid blue;
+  border: 2px solid #F15025;
+}
+
+.button {
+  background-color: white;
+  color: black;
+  border: 2px solid #555555;
+  padding: 6px 14px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.2s;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.button:hover {
+  background-color: #F15025;
+  color: white;
+  border: 2px solid #555555;
+}
+
+.userInput {
+  font-size: 14px;
+  padding: 0.5em;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.userInput:focus {
+  outline: 2px solid #116466;
+}
+
+.userInput:invalid {
+  border: 2px solid red;
 }
 
 @media only screen and (min-width: 650px) {

@@ -1,15 +1,20 @@
 <template>
-  <div>
-<h1>Login</h1>
-  <form  @submit.prevent="login">
-    <label for="username">Username: </label>
-    <input type="text" id="username" name="username" v-model="username" required/>
-    <br><br>
-    <label for="password">Password: </label>
-    <input type="password" id="password" name="password" v-model="password" required/>
-    <br><br>
-    <input type="submit" class="button" value="Login" />
-  </form>
+  <div id="content">
+    <h1>Login</h1>
+    <h2>Please login with your user credentials</h2>
+    <form @submit.prevent="login">
+      <input type="text" id="username" class="userInput" name="username" placeholder="Username" v-model="username" required
+             oninvalid="this.setCustomValidity('Please enter username')"
+             oninput="this.setCustomValidity('')"/>
+      <br><br>
+      <input type="password" id="password" class="userInput" name="password" placeholder="Password" v-model="password" required
+             oninvalid="this.setCustomValidity('Please enter password')"
+             oninput="this.setCustomValidity('')"/>
+      <br><br>
+      <input type="submit" class="button" value="Login">
+      <p>or</p>
+      <a id="toregister" style="font-size: 12px;" @click="this.$router.push({name:'Register'})">Create an account</a>
+      </form>
   </div>
 </template>
 
@@ -43,8 +48,10 @@ export default {
             console.log(response)
             if (response.status === 200) {
               this.$router.push({name: "Home"})
+            } else if (response.status != 200) {
+              alert("Wrong username or password")
             }
-           return response.text()
+            return response.text()
           })
           .then(result => {
             console.log(result)
@@ -67,5 +74,16 @@ export default {
 </script>
 
 <style scoped>
+#toregister {
+  cursor: pointer;
+  text-decoration: underline;
+}
+#content {
+  text-align: center;
+  color: white;
+}
 
+#content h1 {
+  font-size: 48px;
+}
 </style>

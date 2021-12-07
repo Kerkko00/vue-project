@@ -59,27 +59,6 @@ export default {
 </script>
 
 <style scoped>
-.button {
-  background-color: white;
-  color: black;
-  border: 2px solid #555555;
-  padding: 6px 14px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.button:hover {
-  background-color: #555555;
-  color: white;
-  border: 2px solid #555555;
-}
-
 .buttons {
   margin: 1em;
   display: flex;

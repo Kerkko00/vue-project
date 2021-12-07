@@ -33,7 +33,6 @@ export default {
   },
   methods: {
     vote() {
-
       return this.$emit("vote", this.idea.id)
     },
     deleteIdea(){
@@ -50,7 +49,8 @@ export default {
 
 <style scoped>
 div {
-  border: 1px solid black;
+  background-color: white;
+  border: 4px solid #116466;
   padding: 1.5em;
   margin: 1em;
   border-radius: 3px;
@@ -82,5 +82,9 @@ div {
 
 #author {
   font-style: oblique;
+}
+
+.red {
+  color: red;
 }
 </style>
