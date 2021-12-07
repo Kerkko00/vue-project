@@ -2,7 +2,7 @@
   <div>
     <ContentManager @sort-order="sort" @ideaContents="addIdea" :logged="logged"/>
     <template v-for="idea in orderByVotes" :key="idea.id">
-      <Content :idea="idea" @vote="upvote" @delete="deleteIdea" :user="user"/>
+      <Content :idea="idea" @vote="upvote" @delete="deleteIdea" :user="user" :user_id="user_id"/>
     </template>
     <div id="noresults" v-show="!orderByVotes.length">No results</div>
   </div>
@@ -54,7 +54,7 @@ export default {
       return 0;
     },
   },
-  props: ["searchP", "logged", "token", "user", "order"],
+  props: ["searchP", "logged", "token", "user", "order", "user_id"],
   methods: {
     sort(sortOrder) {
       switch (sortOrder) {
@@ -90,6 +90,7 @@ export default {
               this.$emit.push({name: "Login"})
             }
             console.log(result)
+
           })
           .catch(error => console.log('error', error));
     },
@@ -140,7 +141,7 @@ export default {
               this.$emit("logout");
               this.$router.push({name: "Login"})
             }
-            this.ideas.push({id: result, title: title, description: description, author: this.user, upvotes: 0})
+            this.ideas.push({id: result, title: title, description: description, author: this.user, upvotes: 0, voters: ""})
           })
           .catch(error => console.log('error', error));
     },

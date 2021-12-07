@@ -14,7 +14,7 @@ router.post('/register', signupValidation, (req, res, next) => {
 
     db.query(
         `SELECT * FROM users WHERE LOWER(username) = LOWER(${db.escape(
-            req.body.username.split(" ").join("")
+            req.body.username
         )});`,
         (err, result) => {
             if (result.length) {
@@ -31,7 +31,7 @@ router.post('/register', signupValidation, (req, res, next) => {
                     } else {
                     // has hashed pw => add to database
                         db.query(
-                            `INSERT INTO users (username, password) VALUES ('${req.body.username.split(" ").join("")}', ${db.escape(hash)})`,
+                            `INSERT INTO users (username, password) VALUES ('${req.body.username}', ${db.escape(hash)})`,
                             (err, result) => {
                                 if (err) {
                                     throw err;

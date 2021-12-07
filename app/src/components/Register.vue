@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="content">
     <h1>Register</h1>
     <form @submit.prevent="register">
       <label for="username">Username: </label>
@@ -62,5 +62,12 @@ export default {
 </script>
 
 <style scoped>
+#content {
+  text-align: center;
+  color: white;
+}
 
+#content h1 {
+  font-size: 48px;
+}
 </style>

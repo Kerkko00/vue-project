@@ -18,7 +18,7 @@
       </ul>
     </ul>
   </nav>
-  <router-view :searchP="searchParams" :logged="loggedin" :token="token" :user="user" @logout="logout" @login="storage"/>
+  <router-view :user_id="user_id" :searchP="searchParams" :logged="loggedin" :token="token" :user="user" @logout="logout" @login="storage"/>
 
   </div>
 </template>
@@ -37,6 +37,7 @@ export default {
       user: "",
       loggedin: false,
       searchParams: "",
+      user_id: null,
     }
   },
   methods: {
@@ -48,13 +49,14 @@ export default {
         this.loggedin = true;
         this.token = token;
         this.user = user;
+        this.user_id = user_id;
       }
     },
     logout(){
-      localStorage.removeItem("token")
-      localStorage.removeItem("user")
-      this.token = "",
-      this.user = "",
+      localStorage.removeItem("data");
+      this.token = "";
+      this.user = "";
+      this.user_id = null,
       this.loggedin = false;
     },
     reload() {
@@ -72,6 +74,7 @@ html {
 }
 
 body {
+  min-height:100vh;
   margin: 0;
 }
 
@@ -98,7 +101,6 @@ li {
 
 .navbtn {
   text-align: center;
-  border-bottom: 1px solid black;
   /* Centers text vertically */
   line-height: 150%;
 }
@@ -135,7 +137,6 @@ li {
   }
 
   .navbtn {
-    border: 1px solid black;
     font-size: 20px;
   }
 

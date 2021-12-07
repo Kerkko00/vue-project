@@ -53,8 +53,9 @@ export default {
             console.log(msg.user.username)
             if (msg.token) {
               // store user details and jwt token in local storage to keep user logged in between page refreshes
-              localStorage.setItem('token', msg.token);
-              localStorage.setItem("user", msg.user.username);
+              let data = {"token": msg.token, "user": msg.user.username, "user_id": msg.user.id}
+
+              localStorage.setItem("data", JSON.stringify(data));
               this.$emit("login");
             }
           })

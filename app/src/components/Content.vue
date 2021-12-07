@@ -4,7 +4,7 @@
       <li id="title">{{ idea.title }}</li>
       <li id="desc">{{ idea.description }}</li>
       <li id="upvotes">
-        <button v-on:click="vote">&uArr;</button>
+        <button v-on:click="vote" v-if="hasVoted">&uArr;</button>
         {{ idea.upvotes }}
       </li>
       <li id="author">By {{ idea.author }}</li>
@@ -17,7 +17,18 @@
 export default {
   name: "Content",
   data() {
-    return {
+    return{
+
+    }
+  },
+  computed:{
+    hasVoted(){
+      console.log(this.user_id)
+      console.log(this.idea.voters)
+    if(this.idea.voters.includes(this.user_id) == true || this.user == ""){
+      return false;
+    }
+    return true;
     }
   },
   methods: {
@@ -31,7 +42,8 @@ export default {
   },
   props: {
     idea: Object,
-    user: String
+    user: String,
+    user_id: Number,
   },
 }
 </script>
