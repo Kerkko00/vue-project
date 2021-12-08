@@ -45,19 +45,15 @@ export default {
 
       fetch("http://localhost:3000/api/users/login", requestOptions)
           .then(response => {
-            console.log(response)
             if (response.status === 200) {
               this.$router.push({name: "Home"})
-            } else if (response.status != 200) {
+            } else if (response.status !== 200) {
               alert("Wrong username or password")
             }
             return response.text()
           })
           .then(result => {
-            console.log(result)
             let msg = JSON.parse(result)
-            console.log(msg.token)
-            console.log(msg.user.username)
             if (msg.token) {
               // store user details and jwt token in local storage to keep user logged in between page refreshes
               let data = {"token": msg.token, "user": msg.user.username, "user_id": msg.user.id}

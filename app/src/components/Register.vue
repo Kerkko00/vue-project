@@ -12,7 +12,8 @@
              oninvalid="this.setCustomValidity('Password must be 6-254 characters long')"
              oninput="this.setCustomValidity('')"/>
       <br><br>
-      <input type="password" id="confirmPassword" class="userInput" name="confirmPassword" placeholder="Confirm Password"
+      <input type="password" id="confirmPassword" class="userInput" name="confirmPassword"
+             placeholder="Confirm Password"
              pattern=".{6,}" required
              oninvalid="this.setCustomValidity('Please enter password again')"
              oninput="this.setCustomValidity('')"/>

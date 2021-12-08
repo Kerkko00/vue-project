@@ -16,11 +16,10 @@ import ContentManager from "./ContentManager.vue"
 export default {
   name: 'Home',
   components: {
-
     Content,
     ContentManager,
   },
-  created(){
+  created() {
     this.fetchData();
   },
   data() {
@@ -31,9 +30,9 @@ export default {
     }
   },
   watch: {
-    searchP(newVal){
+    searchP(newVal) {
       this.searchParams = newVal;
-      if(this.searchParams != ""){
+      if (this.searchParams !== "") {
         this.search(this.searchParams);
       }
     }
@@ -90,12 +89,11 @@ export default {
               this.$emit.push({name: "Login"})
             }
             console.log(result)
-
           })
           .catch(error => console.log('error', error));
     },
     //Fetches idea data from REST api
-    async fetchData(){
+    async fetchData() {
       let requestOptions = {
         method: 'GET',
         redirect: 'follow'
@@ -104,23 +102,21 @@ export default {
       await fetch("http://127.0.0.1:3000/api/ideas", requestOptions)
           .then(response => response.text())
           .then(result => {
-            console.log(JSON.parse(result))
             this.ideas = JSON.parse(result);
           })
           .catch(error => console.log('error', error));
     },
     search(searchParams) {
-      console.log(searchParams)
       this.sortOrder = "search"
       this.searchParams = searchParams.toLowerCase()
       if (searchParams === "") this.sortOrder = "highest";
     },
     addIdea(title, description) {
-      console.log(title, description)
       let raw = JSON.stringify({
         "title": title,
         "description": description,
       });
+
       let myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("X-Requested-With", "xmlhttprequest");
@@ -141,11 +137,18 @@ export default {
               this.$emit("logout");
               this.$router.push({name: "Login"})
             }
-            this.ideas.push({id: result, title: title, description: description, author: this.user, upvotes: 0, voters: ""})
+            this.ideas.push({
+              id: result,
+              title: title,
+              description: description,
+              author: this.user,
+              upvotes: 0,
+              voters: ""
+            })
           })
           .catch(error => console.log('error', error));
     },
-    deleteIdea(id){
+    deleteIdea(id) {
       let requestOptions = {
         method: 'DELETE',
         redirect: 'follow',
@@ -179,42 +182,42 @@ export default {
   animation: rainbow 5s infinite;
 }
 
-@keyframes rainbow{
-  100%,0%{
-    color: rgb(255,0,0);
+@keyframes rainbow {
+  100%, 0% {
+    color: rgb(255, 0, 0);
   }
-  8%{
-    color: rgb(255,127,0);
+  8% {
+    color: rgb(255, 127, 0);
   }
-  16%{
-    color: rgb(255,255,0);
+  16% {
+    color: rgb(255, 255, 0);
   }
-  25%{
-    color: rgb(127,255,0);
+  25% {
+    color: rgb(127, 255, 0);
   }
-  33%{
-    color: rgb(0,255,0);
+  33% {
+    color: rgb(0, 255, 0);
   }
-  41%{
-    color: rgb(0,255,127);
+  41% {
+    color: rgb(0, 255, 127);
   }
-  50%{
-    color: rgb(0,255,255);
+  50% {
+    color: rgb(0, 255, 255);
   }
-  58%{
-    color: rgb(0,127,255);
+  58% {
+    color: rgb(0, 127, 255);
   }
-  66%{
-    color: rgb(0,0,255);
+  66% {
+    color: rgb(0, 0, 255);
   }
-  75%{
-    color: rgb(127,0,255);
+  75% {
+    color: rgb(127, 0, 255);
   }
-  83%{
-    color: rgb(255,0,255);
+  83% {
+    color: rgb(255, 0, 255);
   }
-  91%{
-    color: rgb(255,0,127);
+  91% {
+    color: rgb(255, 0, 127);
   }
 }
 </style>

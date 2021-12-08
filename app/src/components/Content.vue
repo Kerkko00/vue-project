@@ -4,7 +4,9 @@
       <li id="title">{{ idea.title }}</li>
       <li id="desc">{{ idea.description }}</li>
       <li id="upvotes">
-        <button id="upvotebutton" v-on:click="vote" :disabled="hasVoted || isDisabled"><img src="@/assets/images/upvote.png"></button>
+        <button id="upvotebutton" v-on:click="vote" :disabled="hasVoted || isDisabled"><img alt="Thumbs up button"
+                                                                                            src="@/assets/images/upvote.png">
+        </button>
         {{ idea.upvotes }}
       </li>
       <li id="author">By {{ idea.author }}</li>
@@ -17,27 +19,21 @@
 export default {
   name: "Content",
   data() {
-    return{
+    return {
       isDisabled: false,
     }
   },
-  computed:{
-    hasVoted(){
-      console.log(this.user_id)
-      console.log(this.idea.voters)
-    if(this.idea.voters.split(',').includes(this.user_id.toString()) == true || this.user == ""){
-      return true;
-    }
-    return false;
+  computed: {
+    hasVoted() {
+      return this.idea.voters.split(',').includes(this.user_id.toString()) === true || this.user === "";
     }
   },
   methods: {
     vote() {
       this.isDisabled = true;
-      //this.src = "@/assets/images/upvote.png"
       return this.$emit("vote", this.idea.id)
     },
-    deleteIdea(){
+    deleteIdea() {
       return this.$emit("delete", this.idea.id)
     }
   },
@@ -73,7 +69,6 @@ div {
 }
 
 #upvotes button {
-  font-size: x-large;
   background: none;
   border: none;
   font: inherit;
@@ -90,7 +85,7 @@ div {
 }
 
 #upvotes button:disabled {
- filter: grayscale(100%);
+  filter: grayscale(100%);
 }
 
 @media only screen and (min-width: 450px) {

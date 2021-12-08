@@ -16,8 +16,8 @@
         <button class="close" @click.prevent="showAddModal = false">&times;</button>
         <h2>Add Idea</h2>
         <form>
-          <label for="title" maxlength="65">Title: </label>
-          <input type="text" id="title" name="title" v-model="title"/>
+          <label for="title">Title: </label>
+          <input type="text" id="title" name="title" maxlength="65" v-model="title"/>
           <br><br>
           <p>Description: </p>
           <textarea id="description" v-model="description" maxlength="2000"></textarea>
@@ -40,7 +40,7 @@ export default {
     }
   },
   watch: {
-    logged(newVal){
+    logged(newVal) {
       this.loggedin = newVal;
     }
   },
@@ -79,11 +79,11 @@ export default {
 
 .modalContent {
   background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 15% auto;
   padding: 1em;
   border: 1px solid #888;
   border-radius: 5px;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 80%;
   -webkit-box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.85);
   box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.85);
 }

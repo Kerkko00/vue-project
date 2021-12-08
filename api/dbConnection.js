@@ -1,4 +1,4 @@
-var mysql = require('mysql');
+let mysql = require('mysql');
 let con = mysql.createConnection({
     host: "mysql.metropolia.fi",
     user: "samulu",
@@ -6,7 +6,7 @@ let con = mysql.createConnection({
     database: "samulu"
 });
 
-con.connect(function(err) {
+con.connect(function (err) {
     if (err) throw err;
     console.log('Database is connected successfully !');
 });

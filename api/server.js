@@ -3,8 +3,7 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const mysql = require("mysql")
 const util = require("util");
-const path = require('path');
-const indexRouter = require('./router.js');
+const indexRouter = require('./auth.js');
 const jwt = require("jsonwebtoken")
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -17,7 +16,6 @@ app.use(cookieParser());
 let urlencodedParser = bodyParser.urlencoded({extended: false});
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-
 app.use('/api/users', indexRouter);
 
 let con = mysql.createConnection({
@@ -39,10 +37,8 @@ function checkToken(req, res) {
 
     try {
         const theToken = req.headers.authorization.split(' ')[1];
-    const decoded = jwt.verify(theToken, 'jfhkhfkerhgt4345jkfsdjkhf');
-
-    return decoded;
-    }catch(e){
+        return jwt.verify(theToken, 'jfhkhfkerhgt4345jkfsdjkhf');
+    } catch (e) {
         res.send("Wrong JWT")
     }
 }
@@ -60,10 +56,6 @@ app.get("/api/ideas", function (req, res) {
     })()
 })
 
-app.get("/", function (req, res) {
-    res.send("blank")
-})
-
 app.post("/api/votes", urlencodedParser, function (req, res) {
     let post = req.query.post;
     let decoded = checkToken(req, res)
@@ -75,35 +67,27 @@ app.post("/api/votes", urlencodedParser, function (req, res) {
             try {
                 let response = await query(voterssql, [post]);
                 voters = response[0].voters.toString()
-                console.log(response[0].voters.toString())
             } catch (err) {
                 console.log("Upvoting was not successful! " + err);
             }
 
             //Check if voters contain decoded.user
             let votersArray = voters.split(',')
-            if(votersArray[0] === "") {
+            if (votersArray[0] === "") {
                 votersArray.shift()
             }
-            console.log(votersArray)
-            console.log("decoded id: " + decoded.id)
 
             if (!votersArray.includes(decoded.id.toString())) {
-
                 votersArray.push(decoded.id.toString())
                 voters = votersArray.toString()
-                console.log("voter ids: " + voters)
 
                 let sql = "UPDATE idea_db SET upvotes = upvotes +1, voters = ?"
                     + "WHERE id = ?";
 
                 try {
-                    console.log("id of the post: " + post + ", users who have voted: " + voters)
-                    let q = await query(sql, [voters, post]);
-                    console.log(q)
+                    await query(sql, [voters, post]);
                     res.send("POST successful ");
                 } catch (err) {
-                    console.log("Upvoting was not successful! " + err);
                     res.send("POST was not successful " + err);
                 }
             } else {
@@ -114,7 +98,6 @@ app.post("/api/votes", urlencodedParser, function (req, res) {
 })
 
 app.post("/api/postIdea", urlencodedParser, function (req, res) {
-    console.log("body: %j", req.body);
     let jsonObj = req.body;
     let decoded = checkToken(req, res)
     if (jsonObj != null && decoded != null) {
@@ -123,9 +106,7 @@ app.post("/api/postIdea", urlencodedParser, function (req, res) {
         (async () => {
             try {
                 const result = await query(sql, [jsonObj.title, jsonObj.description, decoded.user, jsonObj.upvotes]);
-                console.log(result)
                 res.json(result.insertId)
-
             } catch (err) {
                 console.log("Insertion into table was unsuccessful!" + err);
                 res.sendStatus(400)
@@ -136,7 +117,6 @@ app.post("/api/postIdea", urlencodedParser, function (req, res) {
 })
 
 app.delete("/api/deleteIdea", urlencodedParser, function (req, res) {
-    console.log(req.query.id);
     let id = req.query.id;
     let decoded = checkToken(req, res)
     if (id != null && decoded != null) {
@@ -156,6 +136,6 @@ app.delete("/api/deleteIdea", urlencodedParser, function (req, res) {
 let server = app.listen(3000, "localhost", function () {
     let host = server.address().address
     let port = server.address().port
-    console.log("Example app listening at http://%s:%s", host, port)
+    console.log("App listening at http://%s:%s", host, port)
 });
 

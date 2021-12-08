@@ -1,39 +1,44 @@
 <template>
   <div>
-  <nav class="navbar">
-    <ul>
-      <li class="navbtn"><router-link to="/" @click.prevent="reload">Home</router-link></li>
-      <li class="navbtn" id="search">
-        <form>
-          <input type="text" placeholder="Search" v-model="searchParams"/>
-        </form>
-      </li>
-      <ul v-if="!loggedin">
-        <li class="navbtn"><router-link to="/login">Login</router-link></li>
-        <li class="navbtn"><router-link to="/register">Register</router-link></li>
+    <nav class="navbar">
+      <ul>
+        <li class="navbtn">
+          <router-link to="/" @click.prevent="reload">Home</router-link>
+        </li>
+        <li class="navbtn" id="search">
+          <form>
+            <input type="text" placeholder="Search" v-model="searchParams"/>
+          </form>
+        </li>
+        <ul v-if="!loggedin">
+          <li class="navbtn">
+            <router-link to="/login">Login</router-link>
+          </li>
+          <li class="navbtn">
+            <router-link to="/register">Register</router-link>
+          </li>
+        </ul>
+        <ul v-else>
+          <li class="navbtn"><a>Hey, {{ user }}</a></li>
+          <li class="navbtn"><a href="#" @click.prevent="logout">Log out</a></li>
+        </ul>
       </ul>
-      <ul v-else>
-        <li class="navbtn"><a>Hey, {{ user }}</a></li>
-        <li class="navbtn"><a href="#" @click.prevent="logout">Log out</a></li>
-      </ul>
-    </ul>
-  </nav>
-  <router-view :user_id="user_id" :searchP="searchParams" :logged="loggedin" :token="token" :user="user" @logout="logout" @login="storage"/>
-
+    </nav>
+    <router-view :user_id="user_id" :searchP="searchParams" :logged="loggedin" :token="token" :user="user"
+                 @logout="logout" @login="storage"/>
   </div>
 </template>
 
 <script>
 export default {
   name: 'App',
-  components: {
-  },
-  mounted(){
+  components: {},
+  mounted() {
     this.storage();
   },
-  data(){
+  data() {
     return {
-    token: "",
+      token: "",
       user: "",
       loggedin: false,
       searchParams: "",
@@ -41,9 +46,9 @@ export default {
     }
   },
   methods: {
-    storage(){
-    let data = localStorage.getItem("data");
-      if(data != null) {
+    storage() {
+      let data = localStorage.getItem("data");
+      if (data != null) {
         let {token, user, user_id} = JSON.parse(data);
         this.loggedin = true;
         this.token = token;
@@ -51,11 +56,11 @@ export default {
         this.user_id = user_id;
       }
     },
-    logout(){
+    logout() {
       localStorage.removeItem("data");
       this.token = "";
       this.user = "";
-      this.user_id = -1,
+      this.user_id = -1;
       this.loggedin = false;
     },
     reload() {
@@ -68,17 +73,12 @@ export default {
 </script>
 
 <style>
-/*
-Colors:
-
-
- */
 html {
   font-family: Arial, sans-serif;
 }
 
 body {
-  min-height:100vh;
+  min-height: 100vh;
   margin: 0;
   background: linear-gradient(to bottom, #3C4B4D, #2C3531) no-repeat;
 }
