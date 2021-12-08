@@ -25,10 +25,10 @@ export default {
     hasVoted(){
       console.log(this.user_id)
       console.log(this.idea.voters)
-    if(this.idea.voters.includes(this.user_id) == true || this.user == ""){
-      return false;
+    if(this.idea.voters.split(',').includes(this.user_id.toString()) == true || this.user == ""){
+      return true;
     }
-    return true;
+    return false;
     }
   },
   methods: {
