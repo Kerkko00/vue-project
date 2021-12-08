@@ -37,7 +37,7 @@ export default {
       user: "",
       loggedin: false,
       searchParams: "",
-      user_id: null,
+      user_id: -1,
     }
   },
   methods: {
@@ -55,7 +55,7 @@ export default {
       localStorage.removeItem("data");
       this.token = "";
       this.user = "";
-      this.user_id = null,
+      this.user_id = -1,
       this.loggedin = false;
     },
     reload() {
