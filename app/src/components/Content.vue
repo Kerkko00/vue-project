@@ -34,6 +34,7 @@ export default {
   methods: {
     vote() {
       this.isDisabled = true;
+      //this.src = "@/assets/images/upvote.png"
       return this.$emit("vote", this.idea.id)
     },
     deleteIdea(){
@@ -67,7 +68,6 @@ div {
 }
 
 #upvotes {
-  float: right;
   font-weight: bolder;
   font-size: xx-large;
 }
@@ -85,7 +85,17 @@ div {
   font-style: oblique;
 }
 
-.red {
-  color: red;
+#upvotes img {
+  width: 50px;
+}
+
+#upvotes button:disabled {
+ filter: grayscale(100%);
+}
+
+@media only screen and (min-width: 450px) {
+  #upvotes {
+    float: right;
+  }
 }
 </style>

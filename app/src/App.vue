@@ -92,6 +92,11 @@ li {
   list-style-type: none;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 .navbar {
   background-color: #116466;
 }
