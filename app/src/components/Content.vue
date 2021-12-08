@@ -18,7 +18,7 @@ export default {
   name: "Content",
   data() {
     return{
-
+      isDisabled: false,
     }
   },
   computed:{
@@ -33,6 +33,7 @@ export default {
   },
   methods: {
     vote() {
+      this.isDisabled = true;
       return this.$emit("vote", this.idea.id)
     },
     deleteIdea(){
