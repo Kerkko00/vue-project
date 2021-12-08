@@ -4,7 +4,7 @@
       <li id="title">{{ idea.title }}</li>
       <li id="desc">{{ idea.description }}</li>
       <li id="upvotes">
-        <button v-on:click="vote" v-if="hasVoted">&uArr;</button>
+        <button v-on:click="vote" :disabled="hasVoted || isDisabled">&uArr;</button>
         {{ idea.upvotes }}
       </li>
       <li id="author">By {{ idea.author }}</li>

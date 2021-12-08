@@ -79,14 +79,17 @@ app.post("/api/votes", urlencodedParser, function (req, res) {
             } catch (err) {
                 console.log("Upvoting was not successful! " + err);
             }
-            //Check if voters contain decoded.user
-            if (!voters.includes(decoded.id)) {
 
-                let votersArray = voters.split(',')
-                if(votersArray[0] === "") {
-                    votersArray.shift()
-                }
-                console.log(votersArray)
+            //Check if voters contain decoded.user
+            let votersArray = voters.split(',')
+            if(votersArray[0] === "") {
+                votersArray.shift()
+            }
+            console.log(votersArray)
+            console.log("decoded id: " + decoded.id)
+
+            if (!votersArray.includes(decoded.id.toString())) {
+
                 votersArray.push(decoded.id.toString())
                 voters = votersArray.toString()
                 console.log("voter ids: " + voters)
