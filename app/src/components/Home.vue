@@ -84,7 +84,7 @@ export default {
       fetch(`http://127.0.0.1:3000/api/votes?post=${id}`, requestOptions)
           .then(response => response.text())
           .then(result => {
-            if(result == "Wrong JWT"){
+            if (result === "Wrong JWT") {
               console.log("logging out")
               this.$emit("logout");
               this.$emit.push({name: "Login"})
@@ -113,7 +113,7 @@ export default {
       console.log(searchParams)
       this.sortOrder = "search"
       this.searchParams = searchParams.toLowerCase()
-      if(searchParams == "") this.sortOrder = "highest";
+      if (searchParams === "") this.sortOrder = "highest";
     },
     addIdea(title, description) {
       console.log(title, description)
@@ -136,7 +136,7 @@ export default {
       fetch("http://localhost:3000/api/postIdea", requestOptions)
           .then(response => response.text())
           .then(result => {
-            if(result == "Wrong JWT"){
+            if (result === "Wrong JWT") {
               console.log("logging out")
               this.$emit("logout");
               this.$router.push({name: "Login"})
@@ -157,14 +157,14 @@ export default {
           .then(response => response.text())
           .then(result => {
             console.log(result)
-            if(result == "Wrong JWT"){
+            if (result === "Wrong JWT") {
               console.log("logging out")
               this.$emit("logout");
               this.$router.push({name: "Login"})
             }
           })
           .catch(error => console.log('error', error));
-      this.ideas = this.ideas.filter(e => (e.id != id));
+      this.ideas = this.ideas.filter(e => (e.id !== id));
     }
   }
 }
