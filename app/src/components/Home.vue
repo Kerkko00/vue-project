@@ -1,9 +1,7 @@
 <template>
   <div>
     <ContentManager @sort-order="sort" @ideaContents="addIdea" :logged="logged"/>
-    <template v-for="idea in orderByVotes" :key="idea.id">
-      <Content :idea="idea" @vote="upvote" @delete="deleteIdea" :user="user" :user_id="user_id"/>
-    </template>
+      <Content v-for="idea in orderByVotes" :key="idea.id" :idea="idea" @vote="upvote" @delete="deleteIdea" :user="user" :user_id="user_id"/>
     <div id="noresults" v-show="!orderByVotes.length">No results</div>
   </div>
 </template>
@@ -20,6 +18,7 @@ export default {
     ContentManager,
   },
   created() {
+    /** when component is created call fetchData */
     this.fetchData();
   },
   data() {
@@ -30,12 +29,14 @@ export default {
     }
   },
   watch: {
+    /** when the value of searchP changes assign the changed value to searchParams */
     searchP(newVal) {
       this.searchParams = newVal;
       if (this.searchParams !== "") {
         this.search(this.searchParams);
       }
     },
+    /** reset searchParams and sortOrder to their default values and call fetchData */
     updateData(){
       this.fetchData()
       this.searchParams = ""
@@ -43,7 +44,7 @@ export default {
     }
   },
   computed: {
-    //Shows results in order chosen by the user
+    /** Show results in order chosen by the user */
     orderByVotes() {
       let votes = this.ideas;
       if (this.sortOrder === "highest") {
@@ -60,6 +61,7 @@ export default {
   },
   props: ["searchP", "logged", "token", "user", "order", "user_id", "updateData"],
   methods: {
+    /** returns selected sortOrder */
     sort(sortOrder) {
       switch (sortOrder) {
         case "highest":
@@ -70,7 +72,7 @@ export default {
           return this.sortOrder = "own";
       }
     },
-    //Saves upvotes to database with REST api
+    /** Save upvotes to database with REST api */
     upvote(id) {
       this.ideas.forEach(idea => {
         if (idea.id === id) {
@@ -97,25 +99,27 @@ export default {
           })
           .catch(error => console.log('error', error));
     },
-    //Fetches idea data from REST api
-    async fetchData() {
+    /** Fetches idea data from REST api */
+    fetchData() {
       let requestOptions = {
         method: 'GET',
         redirect: 'follow'
       };
 
-      await fetch("http://127.0.0.1:3000/api/ideas", requestOptions)
+      fetch("http://127.0.0.1:3000/api/ideas", requestOptions)
           .then(response => response.text())
           .then(result => {
             this.ideas = JSON.parse(result);
           })
           .catch(error => console.log('error', error));
     },
+    /** changes sortOrder based on search parameters */
     search(searchParams) {
       this.sortOrder = "search"
       this.searchParams = searchParams.toLowerCase()
       if (searchParams === "") this.sortOrder = "highest";
     },
+    /** saves new idea to the database using REST api */
     addIdea(title, description) {
       let raw = JSON.stringify({
         "title": title,
@@ -153,6 +157,7 @@ export default {
           })
           .catch(error => console.log('error', error));
     },
+    /** deletes an idea from database using REST api */
     deleteIdea(id) {
       let requestOptions = {
         method: 'DELETE',

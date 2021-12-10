@@ -33,6 +33,7 @@ export default {
     }
   },
   methods: {
+    /** Function for registering user  */
     register() {
       let myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -43,6 +44,7 @@ export default {
         urlencoded.append("username", this.username);
         urlencoded.append("password", this.password);
 
+        // parameters for fetch function
         let requestOptions = {
           method: 'POST',
           headers: myHeaders,
