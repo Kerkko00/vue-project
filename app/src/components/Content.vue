@@ -11,7 +11,7 @@
       </li>
       <li id="author">By {{ idea.author }}</li>
     </ul>
-    <button v-if="idea.author === this.user" @click.prevent="deleteIdea">Delete</button>
+    <button class="button" id="deleteButton" v-if="idea.author === this.user" @click.prevent="deleteIdea">Delete</button>
   </div>
 </template>
 
@@ -62,10 +62,6 @@ div {
   font-size: x-large;
 }
 
-#desc {
-  font-style: italic;
-}
-
 #upvotes {
   font-weight: bolder;
   font-size: xx-large;
@@ -89,6 +85,11 @@ div {
 
 #upvotes button:disabled {
   filter: grayscale(100%);
+}
+
+#deleteButton {
+  font-size: 14px;
+  margin-bottom: 0;
 }
 
 @media only screen and (min-width: 450px) {
