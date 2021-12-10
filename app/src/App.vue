@@ -47,6 +47,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * Retrieves user data from browsers local storage.
+     */
     storage() {
       let data = localStorage.getItem("data");
       if (data != null) {
@@ -57,17 +60,15 @@ export default {
         this.user_id = user_id;
       }
     },
+    /**
+     * Logouts user by deleting user data from browsers local storage.
+     */
     logout() {
       localStorage.removeItem("data");
       this.token = "";
       this.user = "";
       this.user_id = -1;
       this.loggedin = false;
-    },
-    reload() {
-      if (this.$route.path === "/") {
-        location.reload();
-      }
     }
   }
 }

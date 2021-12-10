@@ -5,6 +5,10 @@ const {signupValidation, loginValidation} = require('./validation');
 const {validationResult} = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
+/**
+ * Handles registration with relevant checks and validations.
+ */
 auth.post('/register', signupValidation, (req, res) => {
 
     const errors = validationResult(req);
@@ -22,14 +26,14 @@ auth.post('/register', signupValidation, (req, res) => {
                     msg: 'This user is already in use!'
                 });
             } else {
-                // username is available
+                // Username is available
                 bcrypt.hash(req.body.password, 10, (err, hash) => {
                     if (err) {
                         return res.status(500).send({
                             msg: err
                         });
                     } else {
-                        // has hashed pw => add to database
+                        // If user password is hashed, add it to database
                         db.query(
                             `INSERT INTO users (username, password) VALUES ('${req.body.username}', ${db.escape(hash)})`,
                             (err) => {
@@ -49,6 +53,10 @@ auth.post('/register', signupValidation, (req, res) => {
         }
     );
 });
+
+/**
+ * Handles login with relevant checks and validations.
+ */
 auth.post('/login', loginValidation, (req, res) => {
 
     const errors = validationResult(req);
@@ -59,7 +67,8 @@ auth.post('/login', loginValidation, (req, res) => {
     db.query(
         `SELECT * FROM users WHERE username = ${db.escape(req.body.username)};`,
         (err, result) => {
-// user does not exists
+
+            // User does not exists
             if (err) {
                 return res.status(400).send({
                     msg: err
@@ -70,17 +79,20 @@ auth.post('/login', loginValidation, (req, res) => {
                     msg: 'Email or password is incorrect!'
                 });
             }
-            // check password
+
+            // Check password
             bcrypt.compare(
                 req.body.password,
                 result[0]['password'],
                 (bErr, bResult) => {
-                    // wrong password
+
+                    // Wrong password
                     if (bErr) {
                         return res.status(401).send({
                             msg: 'Email or password is incorrect! Error: ' + bErr
                         });
                     }
+                    // If password is correct return token and update users last login to database
                     if (bResult) {
                         const token = jwt.sign({
                             id: result[0].id,

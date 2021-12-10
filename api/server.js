@@ -26,6 +26,9 @@ let con = mysql.createConnection({
 });
 const query = util.promisify(con.query).bind(con);
 
+/**
+ * Checks if JSONWebToken is valid.
+ */
 function checkToken(req, res) {
     if (
         !req.headers.authorization ||
@@ -43,6 +46,9 @@ function checkToken(req, res) {
     }
 }
 
+/**
+ * Fetches all ideas from the database.
+ */
 app.get("/api/ideas", function (req, res) {
     let sql = "SELECT * FROM idea_db";
 
@@ -56,11 +62,15 @@ app.get("/api/ideas", function (req, res) {
     })()
 })
 
+/**
+ * Handles upvoting of a specific idea.
+ */
 app.post("/api/votes", urlencodedParser, function (req, res) {
     let post = req.query.post;
     let decoded = checkToken(req, res)
     if (post != null && decoded != null) {
-        //Get voters
+
+        // Get voters of the idea
         let voters = "";
         let voterssql = "SELECT voters FROM idea_db WHERE id=?";
         (async () => {
@@ -71,12 +81,14 @@ app.post("/api/votes", urlencodedParser, function (req, res) {
                 console.log("Upvoting was not successful! " + err);
             }
 
-            //Check if voters contain decoded.user
+            // Convert voters string to array
             let votersArray = voters.split(',')
             if (votersArray[0] === "") {
                 votersArray.shift()
             }
 
+            // Check if the voters array contain decoded.user (user who is voting).
+            // If user is not included, update votes amount and voters of the idea to database.
             if (!votersArray.includes(decoded.id.toString())) {
                 votersArray.push(decoded.id.toString())
                 voters = votersArray.toString()
@@ -97,6 +109,9 @@ app.post("/api/votes", urlencodedParser, function (req, res) {
     }
 })
 
+/**
+ * Inserts new idea into database.
+ */
 app.post("/api/postIdea", urlencodedParser, function (req, res) {
     let jsonObj = req.body;
     let decoded = checkToken(req, res)
@@ -116,6 +131,9 @@ app.post("/api/postIdea", urlencodedParser, function (req, res) {
     }
 })
 
+/**
+ * Deletes specific idea from database.
+ */
 app.delete("/api/deleteIdea", urlencodedParser, function (req, res) {
     let id = req.query.id;
     let decoded = checkToken(req, res)
@@ -133,6 +151,10 @@ app.delete("/api/deleteIdea", urlencodedParser, function (req, res) {
     }
 })
 
+/**
+ * Opens port 3000 for listening at localhost
+ * @type {http.Server}
+ */
 let server = app.listen(3000, "localhost", function () {
     let host = server.address().address
     let port = server.address().port
