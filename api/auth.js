@@ -11,6 +11,7 @@ const jwt = require('jsonwebtoken');
  */
 auth.post('/register', signupValidation, (req, res) => {
 
+    // Checks req for errors using validation method
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(422).json({errors: errors.array()});
@@ -43,7 +44,7 @@ auth.post('/register', signupValidation, (req, res) => {
                                     });
                                 }
                                 return res.status(201).send({
-                                    msg: 'The user has been registered with us!'
+                                    msg: 'The user has been registered!'
                                 });
                             }
                         );
@@ -59,6 +60,7 @@ auth.post('/register', signupValidation, (req, res) => {
  */
 auth.post('/login', loginValidation, (req, res) => {
 
+    // Checks req for errors using validation method
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(422).json({errors: errors.array()});

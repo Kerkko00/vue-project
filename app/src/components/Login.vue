@@ -28,10 +28,13 @@ export default {
     }
   },
   methods: {
+    /** Function for handling login request */
     login() {
+      // Headers for login requestOptions
       let myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
+      // Data for login requestOptions
       let urlencoded = new URLSearchParams();
       urlencoded.append("username", this.username);
       urlencoded.append("password", this.password);
@@ -43,10 +46,13 @@ export default {
         redirect: 'follow'
       };
 
+      /** Sends fetch request to backend using request options */
       fetch("http://localhost:3000/api/users/login", requestOptions)
           .then(response => {
+            // If login info is valid, redirects user to Home
             if (response.status === 200) {
               this.$router.push({name: "Home"})
+              // Alerts user if login info is invalid
             } else if (response.status !== 200) {
               alert("Wrong username or password")
             }
@@ -55,9 +61,8 @@ export default {
           .then(result => {
             let msg = JSON.parse(result)
             if (msg.token) {
-              // store user details and jwt token in local storage to keep user logged in between page refreshes
+              // Stores user details and jwt token in local storage to keep user logged in between page refreshes
               let data = {"token": msg.token, "user": msg.user.username, "user_id": msg.user.id}
-
               localStorage.setItem("data", JSON.stringify(data));
               this.$emit("login");
             }

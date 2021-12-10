@@ -1,14 +1,12 @@
 const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
-const mysql = require("mysql")
 const util = require("util");
 const indexRouter = require('./auth.js');
 const jwt = require("jsonwebtoken")
 const bodyParser = require('body-parser');
 const cors = require('cors');
 app.use(cors());
-
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
@@ -18,12 +16,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use('/api/users', indexRouter);
 
-let con = mysql.createConnection({
-    host: "mysql.metropolia.fi",
-    user: "samulu",
-    password: "HJVfRJZwutq89vs",
-    database: "samulu"
-});
+const con = require('./dbConnection');
 const query = util.promisify(con.query).bind(con);
 
 /**

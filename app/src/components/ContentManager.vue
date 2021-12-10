@@ -40,14 +40,17 @@ export default {
     }
   },
   watch: {
+    /** Updates loggedin status */
     logged(newVal) {
       this.loggedin = newVal;
     }
   },
   methods: {
+    /** Handles sorting order for posts by emitting it */
     sort(order) {
       this.$emit("sort-order", order);
     },
+    /** Handles adding idea by emitting it and hiding addIdea modal from view */
     addIdea() {
       this.$emit("ideaContents", this.title, this.description);
       this.showAddModal = false;

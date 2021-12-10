@@ -24,15 +24,18 @@ export default {
     }
   },
   computed: {
+    /** Checks if user is not signed in or has already voted on a post */
     hasVoted() {
       return this.idea.voters.split(',').includes(this.user_id.toString()) === true || this.user === "";
     }
   },
   methods: {
+    /** Handles voting button by disabling it and emitting voted idea */
     vote() {
       this.isDisabled = true;
       return this.$emit("vote", this.idea.id)
     },
+    /** Handles deleting an idea by emitting its id when delete is clicked */
     deleteIdea() {
       return this.$emit("delete", this.idea.id)
     }
