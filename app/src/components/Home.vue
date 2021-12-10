@@ -35,6 +35,11 @@ export default {
       if (this.searchParams !== "") {
         this.search(this.searchParams);
       }
+    },
+    updateData(){
+      this.fetchData()
+      this.searchParams = ""
+      this.sortOrder = "highest"
     }
   },
   computed: {
@@ -53,7 +58,7 @@ export default {
       return 0;
     },
   },
-  props: ["searchP", "logged", "token", "user", "order", "user_id"],
+  props: ["searchP", "logged", "token", "user", "order", "user_id", "updateData"],
   methods: {
     sort(sortOrder) {
       switch (sortOrder) {

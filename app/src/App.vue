@@ -3,7 +3,7 @@
     <nav class="navbar">
       <ul>
         <li class="navbtn">
-          <router-link to="/" @click.prevent="reload">Home</router-link>
+          <router-link to="/" @click.prevent="updateData = !updateData">Home</router-link>
         </li>
         <li class="navbtn" id="search">
           <form>
@@ -24,7 +24,7 @@
         </ul>
       </ul>
     </nav>
-    <router-view :user_id="user_id" :searchP="searchParams" :logged="loggedin" :token="token" :user="user"
+    <router-view :updateData="updateData" :user_id="user_id" :searchP="searchParams" :logged="loggedin" :token="token" :user="user"
                  @logout="logout" @login="storage"/>
   </div>
 </template>
@@ -38,6 +38,7 @@ export default {
   },
   data() {
     return {
+      updateData: false,
       token: "",
       user: "",
       loggedin: false,
